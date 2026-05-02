@@ -1,0 +1,25 @@
+{
+  "overview": "A minimal single-page web application architecture consisting of a frontend component that serves a static HTML page displaying 'Hello World'. The design uses a containerized web application deployed on Kubernetes with no backend dependencies, optimized for simplicity and immediate content delivery.",
+  "requirements": [
+    "The application must display 'Hello World' text when accessed",
+    "The page must load and display content immediately without user interaction",
+    "The application must be accessible via web browser",
+    "The application must be responsive and work on both desktop and mobile browsers",
+    "The application must return the same content on page refresh",
+    "The application must provide a health check endpoint for monitoring"
+  ],
+  "components": [
+    {
+      "name": "hello-world-web",
+      "componentType": "web-app",
+      "language": "TypeScript / React",
+      "dependsOn": [],
+      "entrypoint": "deployment/web-application",
+      "buildpack": "docker",
+      "appPath": "/hello-world-web",
+      "openAPISpec": "openapi: 3.0.3\ninfo:\n  title: Hello World Web Application\n  version: 1.0.0\n  description: A simple web application that displays a greeting message\npaths:\n  /:\n    get:\n      summary: Main page\n      description: Returns the HTML page displaying Hello World\n      operationId: getIndex\n      responses:\n        '200':\n          description: Successfully returned the HTML page\n          content:\n            text/html:\n              schema:\n                type: string\n  /health:\n    get:\n      summary: Health check endpoint\n      description: Returns the health status of the application\n      operationId: healthCheck\n      responses:\n        '200':\n          description: Application is healthy\n          content:\n            application/json:\n              schema:\n                type: object\n                properties:\n                  status:\n                    type: string\n                    example: ok",
+      "componentAgentInstructions": "Implement a React-based single-page application using TypeScript and Create React App or Vite. The application should: 1) Display 'Hello World' as the main content centered on the page. 2) Use responsive CSS to ensure the text is readable on both desktop and mobile devices (use flexbox or CSS Grid for centering). 3) Serve the application on port 9090 using a production-ready static file server (e.g., serve or http-server via Node.js). 4) Include a /health endpoint that returns JSON with status 'ok' and HTTP 200. 5) Configure the Dockerfile to build the React app (npm run build) and serve the static files from the build directory. 6) The page should have a clean, minimal design with adequate padding and a readable font. 7) Ensure fast initial load times by keeping dependencies minimal. 8) Add proper HTML meta tags for viewport configuration to support mobile rendering. 9) The application should handle page refreshes correctly by serving the same content. 10) Include error boundaries in React to gracefully handle any runtime errors. The final Docker image should be optimized for production with multi-stage builds."
+    }
+  ],
+  "sourceSpec": "spec-v1"
+}
